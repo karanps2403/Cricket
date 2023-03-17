@@ -37,10 +37,4 @@ public class StartMatchController {
         this.gameDataDTO = gameDataDTO;
         return startMatchService.start(gameDataDTO);
     }
-    @RequestMapping(method = RequestMethod.GET,value = "/getMatchDetails/{matchId}")
-    public Matches get(@PathVariable String matchId){
-        return matchesRepository.findById(matchId).get();
-    }
-
-
 }

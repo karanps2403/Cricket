@@ -6,6 +6,7 @@ import com.cricket.Cricket.model.Players;
 import com.cricket.Cricket.repository.MatchesRepository;
 import com.cricket.Cricket.repository.PlayersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 import static java.lang.Math.floor;
 
 @Service
+@Component
 public class StartMatchService {
     private int runsRequired=Integer.MAX_VALUE;
     @Autowired
