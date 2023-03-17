@@ -23,7 +23,7 @@ public class MatchesController {
     }
 
     @GetMapping("/matches/{matchId}")
-    public Matches getMatchById(@PathVariable String matchId){
+    public Object getMatchById(@PathVariable String matchId){
         return matchesService.findMatchById(matchId);
     }
 

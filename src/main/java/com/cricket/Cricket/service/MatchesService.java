@@ -22,8 +22,9 @@ public class MatchesService {
         return matchesRepository.findAll();
     }
 
-    public Matches findMatchById(String matchId){
-        return matchesRepository.findById(matchId).get();
+    public Object findMatchById(String matchId){
+        if(matchesRepository.existsById(matchId))return matchesRepository.findById(matchId).get();
+        else return "No match with such id found";
     }
     public String deleteMatchById(String matchId){
         matchesRepository.deleteById(matchId);
