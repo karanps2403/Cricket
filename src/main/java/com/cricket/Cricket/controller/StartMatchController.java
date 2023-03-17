@@ -3,12 +3,11 @@ package com.cricket.Cricket.controller;
 import com.cricket.Cricket.dto.GameDataDTO;
 import com.cricket.Cricket.model.Matches;
 import com.cricket.Cricket.model.Players;
+import com.cricket.Cricket.repository.MatchesRepository;
 import com.cricket.Cricket.service.StartMatchService;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,8 @@ import java.util.List;
 public class StartMatchController {
     @Autowired
     private StartMatchService startMatchService;
+    @Autowired
+    private MatchesRepository matchesRepository;
     @Autowired
     private GameDataDTO gameDataDTO;
     private Matches matches;
@@ -36,9 +37,9 @@ public class StartMatchController {
         this.gameDataDTO = gameDataDTO;
         return startMatchService.start(gameDataDTO);
     }
-    @RequestMapping(method = RequestMethod.GET,value = "/get")
-    public GameDataDTO get(){
-        return this.gameDataDTO;
+    @RequestMapping(method = RequestMethod.GET,value = "/getMatchDetails/{matchId}")
+    public Matches get(@PathVariable String matchId){
+        return matchesRepository.findById(matchId).get();
     }
 
 

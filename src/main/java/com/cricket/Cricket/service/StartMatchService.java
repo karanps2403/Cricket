@@ -19,6 +19,8 @@ public class StartMatchService {
     private MatchesRepository matchesRepository;
     @Autowired
     private PlayersRepository playersRepository;
+    @Autowired
+    private MatchesService matchesService;
     private Matches matches;
     private Players players;
 
@@ -43,6 +45,7 @@ public class StartMatchService {
                 .team2Score(team2Score)
                 .winningTeam(winner)
                 .build();
+        matchesService.addMatch(matches);
 
         System.out.println("------------------------------------");
         if(team1Score>team2Score) return "Team " + winner + " has won by " + (team1Score-team2Score) + " runs";
