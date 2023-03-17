@@ -2,6 +2,7 @@ package com.cricket.Cricket.service;
 
 import com.cricket.Cricket.model.Matches;
 import com.cricket.Cricket.repository.MatchesRepository;
+import com.cricket.Cricket.repository.PlayersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,12 @@ public class MatchesService {
     @Autowired
     private MatchesRepository matchesRepository;
 
-    public void addMatch(Matches matches){
-        matchesRepository.save(matches);
+    @Autowired
+    private PlayersRepository playersRepository;
+
+
+    public void addMatch(Matches match){
+        matchesRepository.save(match);
     }
 
     public List<Matches> findAllMatches() {
@@ -32,7 +37,8 @@ public class MatchesService {
     }
 
     public String deleteAllMatches(){
+        playersRepository.deleteAll();
         matchesRepository.deleteAll();
-        return "History of all matches s deleted.";
+        return "History of all matches and players is deleted.";
     }
 }
