@@ -18,6 +18,7 @@ public class Matches {
     String team1Name;
     String team2Name;
     int overs;
+    List<String> playerIds;
     int team1Score;
     int team2Score;
     String winningTeam;

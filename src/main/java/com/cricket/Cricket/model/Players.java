@@ -11,13 +11,12 @@ import java.util.List;
 
 @Data
 @Builder
-@Document
+@Document(collection = "players")
 public class Players {
     @Id
     private String playerId;
     private String playerName;
     private String teamName;
     private int highScore;
-    private List<String> matchId;
-    private ArrayList<Integer> lastMatchRuns;
+    private List<PlayerRecord> playerRecordList;
 }

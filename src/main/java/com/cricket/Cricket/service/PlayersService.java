@@ -23,10 +23,18 @@ public class PlayersService {
     public List<Players> findAllPlayers(){
         return playersRepository.findAll();
     }
-    public List<Players> findAllByPlayerName(String playerName){return playersRepository.findAllByPlayerName(playerName);}
-    public List<Players> findAllByMatchId(String matchId){return playersRepository.findAllByMatchId(matchId);}
-    public List<Players> findAllByTeamName(String teamName){return playersRepository.findAllByTeamName(teamName);}
-    public Players findByPlayerNameAndTeamName(String playerName,String teamName){return playersRepository.findByPlayerNameAndTeamName(playerName,teamName);}
+    public List<Players> findAllByPlayerName(String playerName){
+        return playersRepository.findAllByPlayerName(playerName);
+    }
+    public List<Players> findAllByMatchId(String matchId){
+        return playersRepository.findAllByMatchId(matchId);
+    }
+    public List<Players> findAllByTeamName(String teamName){
+        return playersRepository.findAllByTeamName(teamName);
+    }
+    public Players findByPlayerNameAndTeamName(String playerName,String teamName){
+        return playersRepository.findByPlayerNameAndTeamName(playerName,teamName);
+    }
     public Object findPlayerById(String playerId){
         if(playersRepository.existsById(playerId)){
             return playersRepository.findById(playerId);
@@ -42,5 +50,11 @@ public class PlayersService {
     public String deleteAllPlayers(){
         playersRepository.deleteAll();
         return "The stats of all players are removed.";
+    }
+    public void updatePlayer(Players player){
+        Players oldPlayer=playersRepository.findById(player.getPlayerId()).get();
+        oldPlayer.setHighScore(player.getHighScore());
+        oldPlayer.setPlayerRecordList(player.getPlayerRecordList());
+        playersRepository.save(oldPlayer);
     }
 }
