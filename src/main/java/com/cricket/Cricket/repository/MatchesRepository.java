@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Component
 public interface MatchesRepository extends MongoRepository<Matches,String> {
+
 }

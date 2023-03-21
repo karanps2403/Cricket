@@ -31,6 +31,8 @@ public class MatchesService {
         if(matchesRepository.existsById(matchId))return matchesRepository.findById(matchId).get();
         else return "No match with such id found";
     }
+
+    /** **/
     public String deleteMatchById(String matchId){
         matchesRepository.deleteById(matchId);
         return "The match data of id : "+matchId+" is deleted.";

@@ -28,9 +28,9 @@ public class StartMatchService {
 
 //    String result;
     public String start(GameDataDTO gameDataDTO){
-        int team1Score = inning(gameDataDTO.getNameTeam1(),gameDataDTO.getTeam1(),gameDataDTO.getOvers());
+        int team1Score = inning(gameDataDTO,0);
         runsRequired=team1Score+1;
-        int team2Score = inning(gameDataDTO.getNameTeam2(),gameDataDTO.getTeam2(),gameDataDTO.getOvers());
+        int team2Score = inning(gameDataDTO,1);
         String winner="None";
         if(team1Score>team2Score){
             winner=gameDataDTO.getNameTeam1();
@@ -48,6 +48,7 @@ public class StartMatchService {
                 .winningTeam(winner)
                 .build();
         matchesService.addMatch(matches);
+        playersRepository.saveAll(Iterable <Players>(gameDataDTO.getTeam1()));
 
         System.out.println("------------------------------------");
         if(team1Score>team2Score) return "Team " + winner + " has won by " + (team1Score-team2Score) + " runs";
@@ -55,14 +56,10 @@ public class StartMatchService {
         else return "Match is drawn";
     }
 
-    public void initializeMatch(){
-
-    }
-
-    private int inning(String team,List<String> players,int totalOvers) {
+    private int inning(GameDataDTO gameDataDTO,int index) {
         int totalRuns=0;
         int playersToBeBowled = 10;
-        int balls = totalOvers*6;
+        int balls = gameDataDTO.getOvers()*6;
         boolean freeHit=false;
         while(playersToBeBowled>0 && balls>0 && totalRuns<runsRequired){
             int hit = (int)(Math.random()*10);
