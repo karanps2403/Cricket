@@ -14,30 +14,24 @@ import java.util.List;
 public class MatchesService {
     @Autowired
     private MatchesRepository matchesRepository;
-
     @Autowired
     private PlayersRepository playersRepository;
-
 
     public void addMatch(Matches match){
         matchesRepository.save(match);
     }
-
     public List<Matches> findAllMatches() {
         return matchesRepository.findAll();
     }
-
     public Object findMatchById(String matchId){
         if(matchesRepository.existsById(matchId))return matchesRepository.findById(matchId).get();
         else return "No match with such id found";
     }
-
     /** **/
     public String deleteMatchById(String matchId){
         matchesRepository.deleteById(matchId);
         return "The match data of id : "+matchId+" is deleted.";
     }
-
     public String deleteAllMatches(){
         playersRepository.deleteAll();
         matchesRepository.deleteAll();

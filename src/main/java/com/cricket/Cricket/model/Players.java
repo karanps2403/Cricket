@@ -18,5 +18,8 @@ public class Players {
     private String playerName;
     private String teamName;
     private int highScore;
-    private List<PlayerRecord> playerRecordList;
+//    private ArrayList<PlayerRecord> playerRecordList;
 }
+
+
+

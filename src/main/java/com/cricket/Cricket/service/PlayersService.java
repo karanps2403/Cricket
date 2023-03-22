@@ -16,21 +16,21 @@ public class PlayersService {
     @Autowired
     private PlayersRepository playersRepository;
 
-    public void addPlayer(Players player){
-        playersRepository.save(player);
+    public Players addPlayer(Players player){
+        return playersRepository.save(player);
     }
 
     public List<Players> findAllPlayers(){
         return playersRepository.findAll();
     }
     public List<Players> findAllByPlayerName(String playerName){
-        return playersRepository.findAllByPlayerName(playerName);
+        return playersRepository.findByPlayerName(playerName);
     }
-    public List<Players> findAllByMatchId(String matchId){
-        return playersRepository.findAllByMatchId(matchId);
-    }
+//    public List<Players> findAllByMatchId(String matchId){
+//        return playersRepository.findAllByMatchId(matchId);
+//    }
     public List<Players> findAllByTeamName(String teamName){
-        return playersRepository.findAllByTeamName(teamName);
+        return playersRepository.findByTeamName(teamName);
     }
     public Players findByPlayerNameAndTeamName(String playerName,String teamName){
         return playersRepository.findByPlayerNameAndTeamName(playerName,teamName);
@@ -54,7 +54,11 @@ public class PlayersService {
     public void updatePlayer(Players player){
         Players oldPlayer=playersRepository.findById(player.getPlayerId()).get();
         oldPlayer.setHighScore(player.getHighScore());
-        oldPlayer.setPlayerRecordList(player.getPlayerRecordList());
+//        oldPlayer.setPlayerRecordList(player.getPlayerRecordList());
         playersRepository.save(oldPlayer);
+    }
+
+    public Players findById(String playerId) {
+        return playersRepository.findById(playerId).get();
     }
 }

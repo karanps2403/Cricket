@@ -16,6 +16,11 @@ public class PlayersController {
     @Autowired
     private PlayersService playersService;
 
+    @GetMapping("/findById/{playerId}")
+    public Players findById(@PathVariable String playerId){
+        return playersService.findById(playerId);
+    }
+
     @GetMapping("/findByPlayerName/{playerName}")
     public List<Players> findAllByPlayerName(@PathVariable String playerName){
         return playersService.findAllByPlayerName(playerName);
@@ -24,14 +29,15 @@ public class PlayersController {
     public List<Players> findAllByTeamName(@PathVariable String teamName){
         return playersService.findAllByTeamName(teamName);
     }
-    @GetMapping("/findAllByMatchId/{matchId}")
-    public List<Players> findAllByMatchId(@PathVariable String matchId){
-        return playersService.findAllByMatchId(matchId);
-    }
+//    @GetMapping("/findAllByMatchId/{matchId}")
+//    public List<Players> findAllByMatchId(@PathVariable String matchId){
+//        return playersService.findAllByMatchId(matchId);
+//    }
     @GetMapping("/findByPlayerNameAndTeamName/{playerName}/{teamName}")
     public Players findByPlayerNameAndTeamName(@PathVariable String playerName, @PathVariable String teamName){
         return playersService.findByPlayerNameAndTeamName(playerName,teamName);
     }
+
 
     
 }

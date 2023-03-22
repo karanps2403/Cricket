@@ -4,8 +4,6 @@ import com.cricket.Cricket.dto.GameDataDTO;
 import com.cricket.Cricket.model.Matches;
 import com.cricket.Cricket.model.PlayerRecord;
 import com.cricket.Cricket.model.Players;
-import com.cricket.Cricket.repository.MatchesRepository;
-import com.cricket.Cricket.repository.PlayersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -13,23 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.floor;
-
 @Service
 @Component
 public class StartMatchService {
     private int runsRequired=Integer.MAX_VALUE;
     @Autowired
-    private MatchesRepository matchesRepository;
-    @Autowired
-    private PlayersRepository playersRepository;
-
-    @Autowired
     private PlayersService playersService;
     @Autowired
     private MatchesService matchesService;
     private Matches matches;
-    private List<Players> players;
+    private List<Players> players=new ArrayList<>();
 
     public String start(GameDataDTO gameDataDTO){
         int team1Score = inning(gameDataDTO,0);
@@ -68,31 +59,36 @@ public class StartMatchService {
     }
 
     public Players fetchPlayer(String playerName, String teamName){
-        Players player=playersRepository.findByPlayerNameAndTeamName(playerName,teamName);
+        Players player=playersService.findByPlayerNameAndTeamName(playerName,teamName);
         if(player==null){
             player=Players.builder()
                     .playerName(playerName)
                     .teamName(teamName)
                     .build();
+            playersService.addPlayer(player);
         }
         return player;
     }
 
     public void updatePlayer(Players player,String matchId, int score){
-        List<PlayerRecord> playerRecordList=player.getPlayerRecordList();
+//        ArrayList<PlayerRecord> playerRecordList=player.getPlayerRecordList();
+//        if(playerRecordList==null){
+//            playerRecordList = new ArrayList<>();
+//        }
         int HighScore=player.getHighScore();
         PlayerRecord record=PlayerRecord.builder()
                 .machId(matchId)
                 .runsScoredInTheMatch(score)
                 .build();
 
-        playerRecordList.add(record);
+//        playerRecordList.add(record);
         if(HighScore < score){
             HighScore=score;
         }
 
-        player.setPlayerRecordList(playerRecordList);
+//        player.setPlayerRecordList(playerRecordList);
         player.setHighScore(HighScore);
+
     }
 
     private int inning(GameDataDTO gameDataDTO,int index) {
