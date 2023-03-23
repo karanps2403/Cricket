@@ -4,9 +4,7 @@ import com.cricket.Cricket.model.Players;
 import com.cricket.Cricket.service.PlayersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,11 +14,14 @@ public class PlayersController {
     @Autowired
     private PlayersService playersService;
 
-    @GetMapping("/findById/{playerId}")
-    public Players findById(@PathVariable String playerId){
-        return playersService.findById(playerId);
+    @PostMapping("/addPlayer")
+    public void addPlayer(@RequestBody Players player){
+        playersService.addPlayer(player);
     }
-
+    @GetMapping("/findPlayerById/{playerId}")
+    public Object findPlayerById(@PathVariable String playerId){
+        return playersService.findPlayerById(playerId);
+    }
     @GetMapping("/findByPlayerName/{playerName}")
     public List<Players> findAllByPlayerName(@PathVariable String playerName){
         return playersService.findAllByPlayerName(playerName);
@@ -29,15 +30,12 @@ public class PlayersController {
     public List<Players> findAllByTeamName(@PathVariable String teamName){
         return playersService.findAllByTeamName(teamName);
     }
-//    @GetMapping("/findAllByMatchId/{matchId}")
-//    public List<Players> findAllByMatchId(@PathVariable String matchId){
-//        return playersService.findAllByMatchId(matchId);
-//    }
     @GetMapping("/findByPlayerNameAndTeamName/{playerName}/{teamName}")
     public Players findByPlayerNameAndTeamName(@PathVariable String playerName, @PathVariable String teamName){
         return playersService.findByPlayerNameAndTeamName(playerName,teamName);
     }
-
-
-    
+    @PutMapping("/updatePlayer")
+    public void updatePlayer(@RequestBody Players player){
+        playersService.updatePlayer(player);
+    }
 }

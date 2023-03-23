@@ -15,7 +15,7 @@ public class MatchesService {
     @Autowired
     private MatchesRepository matchesRepository;
     @Autowired
-    private PlayersRepository playersRepository;
+    private PlayersService playersService;
 
     public void addMatch(Matches match){
         matchesRepository.save(match);
@@ -29,11 +29,13 @@ public class MatchesService {
     }
     /** **/
     public String deleteMatchById(String matchId){
+        List<String> player=matchesRepository.findById(matchId).get().getPlayerIds();
+        for (String s : player) {
+            playersService.deletePlayerRecord(s, matchId);
+        }
         matchesRepository.deleteById(matchId);
-        return "The match data of id : "+matchId+" is deleted.";
-    }
+        return "The match data of id : "+matchId+" is deleted.";}
     public String deleteAllMatches(){
-        playersRepository.deleteAll();
         matchesRepository.deleteAll();
         return "History of all matches and players is deleted.";
     }
